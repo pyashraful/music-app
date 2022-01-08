@@ -53,9 +53,9 @@ function Player({
   };
 
   const getTime = (time) => {
-    console.log(typeof time);
     return (
       Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
+      //TODO: Type Conversion have to fixed
     );
   };
 
@@ -64,24 +64,43 @@ function Player({
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
 
-  // Skip Tack
-
-  const skipTrackHandler = async (driection) => {
+  function skipForward() {
     let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
-    if (driection === "skip-forward") {
-      await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
-      // if(isPlaying) audioRef.current.play()
-    }
-    if (driection === "skip-back") {
-      if ((currentIndex - 1) % songs.length === -1) {
-        await setCurrentSong(songs[songs.length - 1]);
-        if (isPlaying) audioRef.current.play();
-        return;
-      }
-      await setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+    setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+  }
+
+  function skipBack() {
+    let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+
+    if ((currentIndex - 1) % songs.length === -1) {
+      setCurrentSong(songs[songs.length - 1]);
       if (isPlaying) audioRef.current.play();
+    } else {
+      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
-  };
+  }
+
+  // Skip Tack
+  // const skipTrackHandler = async (driection) => {
+  //   let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+  //   if (driection === "skip-forward") {
+  //     skipForward();
+  //     // await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+  //     // if (isPlaying) audioRef.current.play();
+  //   }
+  //   if (driection === "skip-back") {
+  //     // skipBack();
+  //     //   if ((currentIndex - 1) % songs.length === -1) {
+  //     //     await setCurrentSong(songs[songs.length - 1]);
+  //     //     if (isPlaying) audioRef.current.play();
+  //     //     return;
+  //     //   }
+  //     //   await setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+  //     //   if (isPlaying) audioRef.current.play();
+  //     // }
+  //     skipBack();
+  //   }
+  // };
 
   return (
     <div className="player">
@@ -98,9 +117,7 @@ function Player({
       </div>
       <div className="player-control">
         <FontAwesomeIcon
-          onClick={() => {
-            skipTrackHandler("skip-back");
-          }}
+          onClick={skipBack}
           className="skip-back"
           size="2x"
           icon={faAngleLeft}
@@ -112,9 +129,7 @@ function Player({
           icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon
-          onClick={() => {
-            skipTrackHandler("skip-forward");
-          }}
+          onClick={skipForward}
           className=" skip-forward"
           size="2x"
           icon={faAngleRight}
