@@ -6,11 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
@@ -20,8 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "**/*"
-  ],
+  "include": ["**/*"],
   "exclude": []
 }
