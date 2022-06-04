@@ -1,3 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import songReducer from "././Reducers/songReducer";
 
-const store = configureStore(reducer);
+export const store = configureStore({
+  reducer: {
+    songs: songReducer,
+  },
+});
